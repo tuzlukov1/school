@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import javax.websocket.server.PathParam;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,13 +29,32 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("age/{age}") // GET https://localhost:8080/students/age/23
-    public ResponseEntity<List<Student>> getStudentByAge(@PathVariable int age) {
-        List<Student> student = studentService.findStudentByAge(age);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
+    @GetMapping // GET https://localhost:8080/student/
+    public ResponseEntity getStudentByAge(@RequestParam(required=false) Integer age, @RequestParam(required=false) Integer min, @RequestParam(required=false) Integer max) {
+        if (age != null && age > 0) {
+            return ResponseEntity.ok(studentService.findStudentByAge(age));
         }
-        return ResponseEntity.ok(student);
+
+        if ((min != null & min > 0) && (max != null && max > 0)) {
+            return ResponseEntity.ok(studentService.findStudentByAgeBetween(min, max));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping ("facultyId/{facultyId}")// GET https://localhost:8080/student/{facultyId}}
+    public ResponseEntity getStudentByFacultyId(@PathVariable Long facultyId) {
+        if (facultyId != null) {
+            return ResponseEntity.ok(studentService.findStudentByFacultyId(facultyId));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping ("{id}/facultyId")// GET https://localhost:8080/student/{facultyId}}
+    public ResponseEntity getStudentFacultyId(@PathVariable Long id) {
+        if (id != null) {
+            return ResponseEntity.ok(studentService.findStudentById(id).getFaculty());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/all")

@@ -7,6 +7,7 @@ import ru.hogwarts.school.repositories.StudentRepository;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,14 @@ public class StudentService {
 
     public List<Student> findStudentByAge(int age) {
         return studentRepository.findByAge(age);
+    }
+
+    public List<Student> findStudentByFacultyId(Long facultyId) {
+        return studentRepository.findByFacultyId(facultyId);
+    }
+
+    public List<Student> findStudentByAgeBetween(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
     }
 
     public Student editStudent(Student student) {

@@ -28,13 +28,12 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-    @GetMapping("color/{color}") // GET https://localhost:8080/faculty/color/red
-    public ResponseEntity<List<Faculty>> getFucultyByColor(@PathVariable String color) {
-        List<Faculty> faculty = facultyService.findFacultyByColor(color);
-        if (faculty == null) {
-            return ResponseEntity.notFound().build();
+    @GetMapping // GET https://localhost:8080/faculty/
+    public ResponseEntity getFacultyByColorOrName(@RequestParam(required=false) String color, @RequestParam(required=false) String name) {
+        if ((color != null && !color.isBlank())|| (name != null && !name.isBlank())) {
+            return ResponseEntity.ok(facultyService.findFacultyByColorOrName(color, name));
         }
-        return ResponseEntity.ok(faculty);
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/all")

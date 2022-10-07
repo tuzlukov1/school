@@ -6,8 +6,6 @@ import ru.hogwarts.school.repositories.FacultyRepository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
@@ -26,8 +24,8 @@ public class FacultyService {
         return facultyRepository.findById(id).orElse(null);
     }
 
-    public List<Faculty> findFacultyByColor(String color) {
-        return facultyRepository.findByColor(color);
+    public List<Faculty> findFacultyByColorOrName(String color, String name) {
+        return facultyRepository.findByColorOrNameIgnoreCase(color, name);
     }
 
     public Faculty editFaculty(Faculty faculty) {
