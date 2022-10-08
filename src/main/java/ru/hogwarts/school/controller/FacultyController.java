@@ -7,7 +7,6 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("faculty")
@@ -19,7 +18,7 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping("{id}") // GET https://localhost:8080/faculties/23
+    @GetMapping("/{id}") // GET https://localhost:8080/faculties/23
     public ResponseEntity<Faculty> getFacultyInfo(@PathVariable Long id) {
         Faculty faculty = facultyService.findFaculty(id);
         if (faculty == null) {
@@ -29,9 +28,9 @@ public class FacultyController {
     }
 
     @GetMapping // GET https://localhost:8080/faculty/
-    public ResponseEntity getFacultyByColorOrName(@RequestParam(required=false) String color, @RequestParam(required=false) String name) {
-        if ((color != null && !color.isBlank())|| (name != null && !name.isBlank())) {
-            return ResponseEntity.ok(facultyService.findFacultyByColorOrName(color, name));
+    public ResponseEntity<Collection<Faculty>> getFacultyByNameOrColor(@RequestParam String nameOrColor) {
+        if (nameOrColor != null && !nameOrColor.isBlank()) {
+            return ResponseEntity.ok(facultyService.findFacultyByNameOrColor(nameOrColor));
         }
         return ResponseEntity.notFound().build();
     }
@@ -41,12 +40,12 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.getAllFaculties());
     }
 
-    @PostMapping // POST https://localhost:8080/faculties
+    @PostMapping // POST https://localhost:8080/faculty
     public Faculty createFaculty(@RequestBody Faculty faculty) {
         return facultyService.createFaculty(faculty);
     }
 
-    @PutMapping // PUT https://localhost:8080/faculties
+    @PutMapping // PUT https://localhost:8080/faculty
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
         Faculty foundFaculty = facultyService.editFaculty(faculty);
         if (foundFaculty == null) {
@@ -55,7 +54,7 @@ public class FacultyController {
         return ResponseEntity.ok(foundFaculty);
     }
 
-    @DeleteMapping("{id}")// DELETE https://localhost:8080/faculties/23
+    @DeleteMapping("/{id}")// DELETE https://localhost:8080/faculty/23
     public void deleteFaculty(@PathVariable Long id) {
        facultyService.deleteFaculty(id);
     }

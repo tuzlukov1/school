@@ -24,8 +24,8 @@ public class FacultyService {
         return facultyRepository.findById(id).orElse(null);
     }
 
-    public List<Faculty> findFacultyByColorOrName(String color, String name) {
-        return facultyRepository.findByColorOrNameIgnoreCase(color, name);
+    public List<Faculty> findFacultyByNameOrColor(String nameOrColor) {
+        return facultyRepository.findByColorIgnoreCaseOrNameIgnoreCase(nameOrColor, nameOrColor);
     }
 
     public Faculty editFaculty(Faculty faculty) {
