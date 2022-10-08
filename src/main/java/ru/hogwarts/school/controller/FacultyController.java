@@ -29,10 +29,7 @@ public class FacultyController {
 
     @GetMapping // GET https://localhost:8080/faculty/
     public ResponseEntity<Collection<Faculty>> getFacultyByNameOrColor(@RequestParam String nameOrColor) {
-        if (nameOrColor != null && !nameOrColor.isBlank()) {
-            return ResponseEntity.ok(facultyService.findFacultyByNameOrColor(nameOrColor));
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(facultyService.findFacultyByNameOrColor(nameOrColor));
     }
 
     @GetMapping("/all")
@@ -56,6 +53,6 @@ public class FacultyController {
 
     @DeleteMapping("/{id}")// DELETE https://localhost:8080/faculty/23
     public void deleteFaculty(@PathVariable Long id) {
-       facultyService.deleteFaculty(id);
+        facultyService.deleteFaculty(id);
     }
 }
