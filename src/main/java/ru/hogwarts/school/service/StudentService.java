@@ -6,9 +6,6 @@ import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -24,7 +21,7 @@ public class StudentService {
     }
 
     public Student findStudentById(long id) {
-        return studentRepository.findById(id).orElse(null);
+        return studentRepository.findStudentById(id);
     }
 
     public List<Student> findStudentByAge(int age) {
