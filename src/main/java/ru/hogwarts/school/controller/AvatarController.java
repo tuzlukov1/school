@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @RestController
 @RequestMapping("avatar")
@@ -26,10 +27,9 @@ public class AvatarController {
         this.avatarService = avatarService;
     }
 
-
     @PostMapping(value = "/{id}/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadCover(@PathVariable Long id, @RequestParam MultipartFile cover) throws IOException {
-        if (cover.getSize() >= 1024 * 300) {
+        if (cover.getSize() >= 1024 * 600) {
             return ResponseEntity.badRequest().body("File is too big");
         }
 
@@ -60,5 +60,11 @@ public class AvatarController {
         headers.setContentLength(avatar.getData().length);
 
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Avatar>> getAllAvatars(@RequestParam ("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
+        List<Avatar> avatars = avatarService.getAllAvatars(pageNumber, pageSize);
+        return ResponseEntity.ok(avatars);
     }
 }
