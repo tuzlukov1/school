@@ -86,4 +86,19 @@ public class StudentController {
     public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
     }
+
+    @GetMapping("/count")// GET https://localhost:8080/students/count
+    public int countStudent() {
+        return studentService.countStudents();
+    }
+
+    @GetMapping("/averageAge")// GET https://localhost:8080/students/averageAge
+    public double countAverageAgeOfStudents() {
+        return studentService.countStudentsAverageAge();
+    }
+
+    @GetMapping("/last-5")// GET https://localhost:8080/students/last-5
+    public ResponseEntity<List<Student>> getLastFiveStudents() {
+        return ResponseEntity.ok(studentService.getLastFiveStudents());
+    }
 }
