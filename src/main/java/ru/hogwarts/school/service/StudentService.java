@@ -52,7 +52,7 @@ public class StudentService {
         return studentRepository.countStudent();
     }
 
-    public int countStudentsAverageAge() {
+    public double countStudentsAverageAge() {
         return studentRepository.countStudentsAverageAge();
     }
 

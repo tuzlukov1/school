@@ -93,7 +93,7 @@ public class StudentController {
     }
 
     @GetMapping("/averageAge")// GET https://localhost:8080/students/averageAge
-    public int countAverageAgeOfStudents() {
+    public double countAverageAgeOfStudents() {
         return studentService.countStudentsAverageAge();
     }
 
