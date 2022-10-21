@@ -25,7 +25,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 public class AvatarService {
 
-    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     @Value("${student.avatar.dir.path}")
     private String avatarsDir;
@@ -33,7 +33,7 @@ public class AvatarService {
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
 
-    public AvatarService(StudentRepository studentRepository, StudentService studentService, AvatarRepository avatarRepository) {
+    public AvatarService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
     }
@@ -49,7 +49,7 @@ public class AvatarService {
         try (InputStream is = file.getInputStream();
              OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
              BufferedInputStream bis = new BufferedInputStream(is, 1024);
-             BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
+             BufferedOutputStream bos = new BufferedOutputStream(os, 1024)
         ) {
             bis.transferTo(bos);
         }
