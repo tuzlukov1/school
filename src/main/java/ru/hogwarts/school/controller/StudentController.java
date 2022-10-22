@@ -73,6 +73,16 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
+    @GetMapping("/allInThreads")
+    public void getAllStudentsInThreads() {
+        studentService.getAllStudentsInThreads();
+    }
+
+    @GetMapping("/allInSyncThreadsSync")
+    public void getAllStudentsInThreadsSync() {
+        studentService.getAllStudentsInThreadsSync();
+    }
+
     @PostMapping // POST https://localhost:8080/students
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);
