@@ -33,7 +33,7 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.findFacultyByNameOrColor(nameOrColor));
     }
 
-    @GetMapping("/getLongestName") // GET https://localhost:8080/faculty/
+    @GetMapping("/getLongestName") // GET https://localhost:8080/getLongestName
     public ResponseEntity<Optional<String>> getLongestFacultyName() {
         return ResponseEntity.ok(facultyService.getLongestFacultyName());
     }
