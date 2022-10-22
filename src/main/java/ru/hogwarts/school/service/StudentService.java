@@ -8,6 +8,9 @@ import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class StudentService {
@@ -28,6 +31,15 @@ public class StudentService {
     public Student findStudentById(long id) {
         logger.info("Was invoked method for find student by id = " + id);
         return studentRepository.findStudentById(id);
+    }
+
+    public List<Student> findStudentByFirstSymbol(String symbol) {
+        logger.info("Was invoked method for find student by first symbol = " + symbol);
+        return studentRepository
+                .findAll()
+                .stream()
+                .filter(student -> student.getName().startsWith(symbol))
+                .collect(Collectors.toList());
     }
 
     public List<Student> findStudentByAge(int age) {
@@ -65,9 +77,10 @@ public class StudentService {
         return studentRepository.countStudent();
     }
 
-    public double countStudentsAverageAge() {
+    public OptionalDouble countStudentsAverageAge() {
         logger.info("Was invoked method for count students average age");
-        return studentRepository.countStudentsAverageAge();
+        IntStream stream = studentRepository.findAll().stream().mapToInt(Student::getAge);
+        return stream.average();
     }
 
     public List<Student> getLastFiveStudents() {

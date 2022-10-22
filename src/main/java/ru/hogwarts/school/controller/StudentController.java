@@ -7,9 +7,9 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
-import javax.websocket.server.PathParam;
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @RestController
 @RequestMapping("student")
@@ -47,7 +47,7 @@ public class StudentController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping ("faculty/{id}")// GET https://localhost:8080/student/facultyId/{facultyId}}
+    @GetMapping("faculty/{id}")// GET https://localhost:8080/student/facultyId/{facultyId}}
     public ResponseEntity<Collection<Student>> getStudentByFacultyId(@PathVariable Long id) {
         if (id != null) {
             return ResponseEntity.ok(studentService.findStudentByFacultyId(id));
@@ -55,12 +55,17 @@ public class StudentController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping ("/{id}/faculty")// GET https://localhost:8080/student/{facultyId}}
+    @GetMapping("/{id}/faculty")// GET https://localhost:8080/student/{facultyId}}
     public ResponseEntity<Faculty> getStudentFacultyId(@PathVariable Long id) {
         if (id != null) {
             return ResponseEntity.ok(studentService.findStudentById(id).getFaculty());
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/getByFirstSymbol")// GET https://localhost:8080/student/getByFirstSymbol
+    public ResponseEntity<List<Student>> getStudentByFirstSymbolInNameA() {
+        return ResponseEntity.ok(studentService.findStudentByFirstSymbol("A"));
     }
 
     @GetMapping("/all")
@@ -93,7 +98,7 @@ public class StudentController {
     }
 
     @GetMapping("/averageAge")// GET https://localhost:8080/students/averageAge
-    public double countAverageAgeOfStudents() {
+    public OptionalDouble countAverageAgeOfStudents() {
         return studentService.countStudentsAverageAge();
     }
 
