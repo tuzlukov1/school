@@ -55,6 +55,6 @@ public class FacultyService {
 
     public String getLongestFacultyName() {
         logger.info("Was invoked method for get longest faculty name");
-        return facultyRepository.findAll().stream().map(Faculty::getName).max(Comparator.comparingInt(String::length)).get();
+        return facultyRepository.findAll().stream().map(Faculty::getName).max(Comparator.comparingInt(String::length)).orElse("Нет факультетов");
     }
 }

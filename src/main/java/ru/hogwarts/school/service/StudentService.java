@@ -13,6 +13,8 @@ import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.Comparator.naturalOrder;
+
 @Service
 public class StudentService {
 
@@ -39,9 +41,9 @@ public class StudentService {
         return studentRepository
                 .findAll()
                 .stream()
-                .filter(student -> student.getName().substring(0, 1).equalsIgnoreCase(symbol))
-                .map(s->s.getName().substring(0, 1).toUpperCase() + s.getName().substring(1))
-                .sorted(Comparator.naturalOrder())
+                .filter(student -> student.getName().toLowerCase().startsWith(symbol.toLowerCase()))
+                .map(s->s.getName().toUpperCase())
+                .sorted(naturalOrder())
                 .collect(Collectors.toList());
     }
 
@@ -83,7 +85,7 @@ public class StudentService {
     public double countStudentsAverageAge() {
         logger.info("Was invoked method for count students average age");
         IntStream stream = studentRepository.findAll().stream().mapToInt(Student::getAge);
-        return stream.average().getAsDouble();
+        return stream.average().orElse(0);
     }
 
     public List<Student> getLastFiveStudents() {
