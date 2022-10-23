@@ -64,7 +64,7 @@ public class StudentController {
     }
 
     @GetMapping("/getByFirstSymbol")// GET https://localhost:8080/student/getByFirstSymbol
-    public ResponseEntity<List<Student>> getStudentByFirstSymbolInNameA() {
+    public ResponseEntity<List<String>> getStudentByFirstSymbolInNameA() {
         return ResponseEntity.ok(studentService.findStudentByFirstSymbol("A"));
     }
 
@@ -108,7 +108,7 @@ public class StudentController {
     }
 
     @GetMapping("/averageAge")// GET https://localhost:8080/students/averageAge
-    public OptionalDouble countAverageAgeOfStudents() {
+    public double countAverageAgeOfStudents() {
         return studentService.countStudentsAverageAge();
     }
 

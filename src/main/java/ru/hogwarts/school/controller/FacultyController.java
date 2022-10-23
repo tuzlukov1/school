@@ -34,7 +34,7 @@ public class FacultyController {
     }
 
     @GetMapping("/getLongestName") // GET https://localhost:8080/getLongestName
-    public ResponseEntity<Optional<String>> getLongestFacultyName() {
+    public ResponseEntity<String> getLongestFacultyName() {
         return ResponseEntity.ok(facultyService.getLongestFacultyName());
     }
 

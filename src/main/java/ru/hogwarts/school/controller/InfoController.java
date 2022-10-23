@@ -25,6 +25,6 @@ public class InfoController {
 
     @GetMapping("/getCalculate")
     public Integer getCalculate() {
-        return Stream.iterate(1, a -> a +1).limit(1_000_000).parallel().reduce(0, (a, b) -> a + b);
+        return infoService.getCalculate();
     }
 }
